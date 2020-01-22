@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  description: this is a restful apis  #REST（Representational State Transfer）RESTful REST式
+  title: message-center
+  version: 1.0.0
+servers:
+  - url: http://0.0.0.0:8888/
+tags:
+- description: 企业微信机器人info
+  name: info
+- description: content模版
+  name: template
+
+
+paths:
+  /robots:
+     get:
+       tags:
+       - info
+       summary: 获取机器人信息
+       operationId: api.api_info.get_info
+       description: 获取企业微信机器人信息
+       parameters:
+        - name: Authorization
+          in: header
+          description: 获取信息授权
+          required: true
+          schema:
+           type: string
+       responses:
+        200:
+          description: '获取信息成功返回200'
+     post:
+       tags:
+       - info
+       summary: 上传机器人信息
+       description: 上传企业微信机器人信息
+       operationId: api.api_info.create_info
+       parameters:
+        - name: Authorization
+          in: header
+          description: 上传信息授权
+          required: true
+          schema:
+           type: string
+       requestBody:
+         description: 机器人信息
+         required: true
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/info'#该方法等同于下面注释的代码，该方法可以复用
+            # type: object
+            # required:
+            # - name
+            # - url
+            # properties:
+            #   url:
+            #     type: string
+            #   name:
+            #     type: string
+            #   comment:
+            #     type: string
+       responses:
+        200:
+          description: '上传信息成功返回200'
+  /robots/{key}:
+     put:
+      tags:
+      - info
+      summary: 修改机器人信息
+      description: 修改数据库中已存在的机器人信息，name和comment
+      operationId: api.api_info.update_info
+      parameters:
+       - name: Authorization
+         in: header
+         description: 修改授权
+         required: true
+         schema:
+           type: string
+       - name: key
+         in: path
+         description: 需要修改信息的key
+         required: true
+         schema:
+           type: string
+      requestBody:
+        description: 提交需要修改信息
+        required: true
+        content:
+          application/json:
+           schema:
+             type: object
+             required:
+             - name
+             - comment
+             properties:
+              url:
+                type: string
+              name:
+                type: string
+              comment:
+                type: string
+      responses:
+        200:
+         description: '更新企业机器人信息成功'
+     delete:
+       tags:
+       - info
+       summary: 删除机器人信息
+       description: 删除企业微信机器人信息
+       operationId: api.api_info.delete_info
+       parameters:
+       - name: Authorization
+         in: header
+         description: 删除授权
+         required: true
+         schema:
+           type: string
+       - name: key
+         in: path
+         description: 删除授权
+         required: true
+         schema:
+           type: string
+       responses:
+        200:
+         description: ''
+
+
+
+
+components:
+  schemas:
+   info:
+    type: object
+    required:
+    - name
+    - url
+    properties:
+     url:
+      type: string
+     name:
+      type: string
+     comment:
+      type: string
