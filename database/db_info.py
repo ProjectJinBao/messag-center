@@ -42,7 +42,7 @@ class Info(db.Entity):
             raise IsExist(title='该url已经存在', detail=f'url为{url}的机器人已经存在')
         #需要添加正在匹配，将key单独存储
         else:
-            Info(url = url, name = name, comment = comment,key = key)
+            Info(url = url, name = name, comment = comment, key = key)
 
     @classmethod
     @db_session

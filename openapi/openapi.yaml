@@ -21,8 +21,10 @@ paths:
        operationId: api.api_info.get_info
        description: 获取企业微信机器人信息
        parameters:
+#         - $ref: '#/definitions/header'
         - name: Authorization
           in: header
+#          in: query是添加请求参数
           description: 获取信息授权
           required: true
           schema:
@@ -49,6 +51,7 @@ paths:
          content:
           application/json:
             schema:
+            # 模式属性
              $ref: '#/components/schemas/info'#该方法等同于下面注释的代码，该方法可以复用
             # type: object
             # required:
@@ -80,6 +83,7 @@ paths:
            type: string
        - name: key
          in: path
+#         路径参数
          description: 需要修改信息的key
          required: true
          schema:
@@ -90,17 +94,7 @@ paths:
         content:
           application/json:
            schema:
-             type: object
-             required:
-             - name
-             - comment
-             properties:
-              url:
-                type: string
-              name:
-                type: string
-              comment:
-                type: string
+              $ref: '#/components/schemas/info'
       responses:
         200:
          description: '更新企业机器人信息成功'
@@ -111,21 +105,113 @@ paths:
        description: 删除企业微信机器人信息
        operationId: api.api_info.delete_info
        parameters:
-       - name: Authorization
-         in: header
-         description: 删除授权
-         required: true
-         schema:
-           type: string
-       - name: key
-         in: path
-         description: 删除授权
-         required: true
-         schema:
-           type: string
+        - name: Authorization
+          in: header
+          description: 删除授权
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: 删除授权
+          required: true
+          schema:
+            type: string
        responses:
         200:
          description: ''
+  /contents:
+    post:
+     tags:
+     - template
+     summary: 上传内容模版
+     description: 上传机器人发送的模版
+     operationId: api.api_content.create_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 上传模版信息授权
+        required: true
+        schema:
+          type: string
+     requestBody:
+        description: 模版信息
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/content'
+     responses:
+        200:
+          description: '上传信息成功返回200'
+    get:
+     tags:
+     - template
+     summary: 获取模版
+     description: 获取发送的模版
+     operationId: api.api_content.get_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 上传信息授权
+        required: true
+        schema:
+          type: string
+     responses:
+        200:
+          description: '获取模版成功'
+  /contents/{name}:
+    put:
+     tags:
+     - template
+     summary: 修改模版信息
+     description: 修改指定名称的模版信息
+     operationId: api.api_content.update_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 修改授权
+        required: true
+        schema:
+         type: string
+      - name: name
+        in: path
+        description: 根据名称获取信息并进行修改
+        required: true
+        schema:
+         type: string
+     requestBody:
+        description: 模版信息
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/content'
+     responses:
+       200:
+         description: 修改模版成功
+    delete:
+     tags:
+     - template
+     summary: 删除模版信息
+     description: 删除指定名称的模版信息
+     operationId: api.api_content.delete_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 修改授权
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: 根据名称获取信息并进行修改
+        required: true
+        schema:
+          type: string
+     responses:
+        200:
+         description: 删除模版成功
 
 
 
@@ -144,3 +230,37 @@ components:
       type: string
      comment:
       type: string
+   content:
+     type:  object
+     required:
+     - msgtype
+     - content
+     - name
+     properties:
+      msgtype:
+       type: string
+       enum:
+#       枚举类型
+         - text
+         - markdown
+      content:
+       type: string
+      name:
+       type: string
+      project:
+       description: 获取jira的项目
+       type: string
+      sprint:
+       description: 获取jira的sprint
+       type: string
+
+
+#definitions:
+#  header:
+#    name: Authorization
+#    in: header
+#    description: 上传信息授权
+#    required: true
+#    type: string
+#    schema:
+#      type: string

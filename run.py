@@ -2,8 +2,12 @@
 import connexion
 from database.mysql_conn import db
 from database.db_info import Info
+from database.db_content import Content
 import sys
 from utils.exception_handle import DefalutError
+
+# import jsonpath
+# print(jsonpath.jsonpath(d, 'stu_info.[0].id'))
 
 if __name__ == '__main__':
 
@@ -21,4 +25,6 @@ if __name__ == '__main__':
             raise DefalutError(title='验证失败')
 
     app.run(host='0.0.0.0', debug=True)
+
+
 

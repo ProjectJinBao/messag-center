@@ -24,7 +24,6 @@ def create_info(body):
         raise DefalutError(title=f'未知异常', detail=f'{e}')
 #更新机器人信息
 def update_info(key, body):
-    print(key)
     try:
         svc_put_info(key,body)
         return {"title": "更新信息成功"}, 200
