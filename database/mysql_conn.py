@@ -1,4 +1,4 @@
-import pymysql
+
 from pony.orm import Database
 from pony.orm import (Json, PrimaryKey, Required, db_session, select, desc, Set, get, Optional)
 '''

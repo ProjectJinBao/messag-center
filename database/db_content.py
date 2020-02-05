@@ -8,7 +8,7 @@ class Content(db.Entity):
     _table_ = 'content'
     id = PrimaryKey(int, auto=True)
     msgtype = Required(str, 30, default="text")
-    name = Required(str, 50, default="未知")
+    name = Required(str, 50, unique=True)
     content = Required(str)
     isdelete = Optional(bool)
     create_time = Required(datetime.datetime, default=datetime.datetime.now(), nullable=True)
