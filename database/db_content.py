@@ -64,4 +64,16 @@ class Content(db.Entity):
         else:
             raise IsNotExist(title='没有该名字的模版',detail=f'没有名字为【{name}】的模版')
 
-
+    @classmethod
+    @db_session
+    def db_content(cls, name):
+        obj = get(n for n in Content if n.name==name and n.isdelete == 0)
+        if obj:
+            return {
+                "content": obj.content,
+                "project": obj.project,
+                "sprint": obj.sprint,
+                "msgtype": obj.msgtype
+            }
+        else:
+            raise IsNotExist(title='没有该名字的模版',detail=f'没有名字为【{name}】的模版')

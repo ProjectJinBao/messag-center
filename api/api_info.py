@@ -1,6 +1,5 @@
-import connexion
 from service.svc_info import svc_get_info,svc_creat_info,svc_put_info,svc_del_info
-from utils.exception_handle import IsExist, DefalutError,IsNotExist
+from utils.exception_handle import IsExist, DefalutError,IsNotExist,NotMatch
 
 
 #获取企业微信机器人信息，接口/robot
@@ -20,6 +19,8 @@ def create_info(body):
         return {"title": "企业微信机器人信息上传成功"}, 200
     except IsExist as e:
         raise DefalutError(title=f'{e.title}', detail=f'{e.detail}', type=f'{e.type}')
+    except NotMatch as e:
+        raise DefalutError(title=f'{e.title}',detail=f'{e.detail}')
     except Exception as e:
         raise DefalutError(title=f'未知异常', detail=f'{e}')
 #更新机器人信息

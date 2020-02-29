@@ -1,7 +1,7 @@
 from connexion import ProblemException
 
-class NotFound(ProblemException):
-    def __init__(self, title="NOT_FOUND", detail="", status=400, type="NotFound", **kwargs):
+class NotMatch(ProblemException):
+    def __init__(self, title="url格式异常", detail="", status=400, type="NotMatch", **kwargs):
         super().__init__(title=title, detail=detail, status=status, type=type, **kwargs)
 
 class IsExist(ProblemException):

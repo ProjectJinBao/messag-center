@@ -10,6 +10,8 @@ tags:
   name: info
 - description: content模版
   name: template
+- description: 发送机器人消息
+  name: sendmessages
 
 
 paths:
@@ -82,8 +84,7 @@ paths:
          schema:
            type: string
        - name: key
-         in: path
-#         路径参数
+         in: path #路径参数
          description: 需要修改信息的key
          required: true
          schema:
@@ -119,7 +120,7 @@ paths:
             type: string
        responses:
         200:
-         description: ''
+         description: '发送成功'
   /contents:
     post:
      tags:
@@ -212,8 +213,91 @@ paths:
      responses:
         200:
          description: 删除模版成功
-
-
+  /send/template/robot:
+     post:
+      tags:
+      - sendmessages
+      summary: 发送模版中消息
+      description: 发送模版中消息
+      operationId: api.api_sendmsg.send_template_robot
+      parameters:
+        - name: Authorization
+          in: header
+          description: 发送信息授权
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 发送的相关信息
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             required:
+             - content_name
+             - robot_key
+             properties:
+               content_name:
+                 description: 发送模版名字
+                 type: string
+               robot_key:
+                 description: 需要发送的机器人key
+                 type: string
+      responses:
+        200:
+          description: 删除模版成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+  /send/robot:
+     post:
+      tags:
+      - sendmessages
+      summary: 直接发送消息
+      description: 直接发送消息
+      operationId: api.api_sendmsg.send_robot
+      parameters:
+        - name: Authorization
+          in: header
+          description: 发送信息授权
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 发送的相关信息
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             required:
+             - content
+             - robot_key
+             - msgtype
+             properties:
+               content:
+                 description: 发送内容
+                 type: string
+               msgtype:
+                 description: 发送的内容模式
+               robot_key:
+                 description: 需要发送的机器人key
+                 type: string
+      responses:
+        200:
+          description: 发送成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
 
 
 components:
@@ -239,6 +323,7 @@ components:
      properties:
       msgtype:
        type: string
+       description: 企业微信机器人支持的内容格式为text和markdown两种
        enum:
 #       枚举类型
          - text

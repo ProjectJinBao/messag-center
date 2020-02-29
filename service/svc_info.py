@@ -1,7 +1,7 @@
 
 from database.mysql_conn import db
 from database.db_info import Info
-from utils.match import re_search
+from utils.regex import re_search
 
 #获取企业微信机器人信息
 def svc_get_info():

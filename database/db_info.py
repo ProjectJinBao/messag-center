@@ -13,7 +13,7 @@ class Info(db.Entity):
     url = Optional(str, 100)
     comment = Optional(str, 50, nullable = True)
     create_time = Required(datetime.datetime, default = datetime.datetime.now(), nullable = True)
-    update_time = Required(datetime.datetime, default = datetime.datetime.now(), nullable = True)
+    update_time = Optional(datetime.datetime)
 
     @classmethod #类方法的装饰器。表明此方法可以直接被类对象调用
     @db_session #数据库会话的装饰器，被此装饰器装饰的方法，内部的代码都运行在是数据库会话的上下文之间
@@ -60,8 +60,16 @@ class Info(db.Entity):
     @db_session
     def db_del_info(self,key):
         obj = get(n for n in Info if n.key == key)
-        print(key)
         if obj:
            obj.delete()
         else:
             raise IsNotExist(title='删除机器人不存在', detail=f'key={key}的机器人不存在')
+
+    @classmethod
+    @db_session
+    def db_info(self, key):
+        obj = get(n for n in Info if n.key == key)
+        if obj:
+            return obj.url
+        else:
+            raise IsNotExist(title='查询机器人不存在', detail=f'key={key}的机器人不存在')
