@@ -285,6 +285,13 @@ paths:
                  type: string
                msgtype:
                  description: 发送的内容模式
+                 type: string
+                 enum:
+          #       枚举类型
+                   - text
+                   - markdown
+                   - news
+                   - image
                robot_key:
                  description: 需要发送的机器人key
                  type: string
@@ -328,6 +335,8 @@ components:
 #       枚举类型
          - text
          - markdown
+         - news
+         - image
       content:
        type: string
       name:

@@ -1,7 +1,8 @@
+# coding=utf-8
 import requests
 import base64
 import hashlib
-
+import json
 
 
 class QYWX_Robot(object):
@@ -42,6 +43,7 @@ class QYWX_Robot(object):
         :param content:
         :return:
         """
+
         payload = {
             'msgtype': 'markdown',
             'markdown': {
