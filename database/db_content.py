@@ -18,12 +18,12 @@ class Content(db.Entity):
 
     @classmethod
     @db_session
-    def db_create_content(cls, msgtype, name, content, project, sprint):
+    def db_create_content(cls, msgtype, name, content):
         obj = get(n for n in Content if n.name == name)
         if obj:
             raise IsExist(title='该名字的模版已经存在', detail=f'name为【{name}】的模版已经存在')
         else:
-            Content(msgtype=msgtype, name=name, content=content, project=project, sprint=sprint, create_time=datetime.datetime.now(), isdelete=0)
+            Content(msgtype=msgtype, name=name, content=content, create_time=datetime.datetime.now(), isdelete=0)
 
     @classmethod
     @db_session
@@ -35,8 +35,8 @@ class Content(db.Entity):
                 "name": obj.name,
                 "content": obj.content,
                 "msgtype": obj.msgtype,
-                "project": obj.project,
-                "sprint": obj.sprint
+                # "project": obj.project,
+                # "sprint": obj.sprint
             }
             data.append(dict)
         return data
@@ -48,8 +48,8 @@ class Content(db.Entity):
         if obj:
             obj.msgtype = msgtype
             obj.content = content
-            obj.project = project
-            obj.sprint = sprint
+            # obj.project = project
+            # obj.sprint = sprint
             obj.update_time = datetime.datetime.now()
         else:
             raise IsNotExist(title='没有该名字的模版', detail=f'没有名为【{name}】的模版')
@@ -71,8 +71,8 @@ class Content(db.Entity):
         if obj:
             return {
                 "content": obj.content,
-                "project": obj.project,
-                "sprint": obj.sprint,
+                # "project": obj.project,
+                # "sprint": obj.sprint,
                 "msgtype": obj.msgtype
             }
         else:
