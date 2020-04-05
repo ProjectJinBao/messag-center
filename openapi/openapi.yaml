@@ -310,43 +310,44 @@ paths:
 components:
   schemas:
    info:
-    type: object
-    required:
-    - name
-    - url
-    properties:
-     url:
-      type: string
-     name:
-      type: string
-     comment:
-      type: string
-   content:
-     type:  object
+     type: object
      required:
-     - msgtype
-     - content
      - name
+     - url
      properties:
-      msgtype:
-       type: string
-       description: 企业微信机器人支持的内容格式为text和markdown两种
-       enum:
+       url:
+         type: string
+       name:
+         type: string
+       comment:
+         type: string
+   content:
+      type:  object
+      required:
+      - msgtype
+      - content
+      - name
+      properties:
+       msgtype:
+         type: string
+         description: 企业微信机器人支持的内容格式
+         enum:
 #       枚举类型
-         - text
-         - markdown
-         - news
-         - image
-      content:
-       type: string
-      name:
-       type: string
-      project:
-       description: 获取jira的项目
-       type: string
-      sprint:
-       description: 获取jira的sprint
-       type: string
+          - text
+          - markdown
+          - news
+          - image
+       content:
+         type: string
+         description: 如果是markdown，需要为[{"titile":"test","color":"black"},{"color":"green","info":"已修复"},{"color":"orange","info":"未修复"},{"color":"gray","info":"已验证"},{"link_text":"这是一个链接","link":"www","color":"black"}]
+       name:
+         type: string
+#       project:
+#         description: 获取jira的项目
+#         type: string
+#       sprint:
+#         description: 获取jira的sprint
+#         type: string
 
 
 #definitions:
