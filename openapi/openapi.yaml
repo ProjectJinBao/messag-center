@@ -16,21 +16,20 @@ tags:
 
 paths:
   /robots:
+     #path全局变量，path所有的方法都有的变量
+     parameters:
+     - name: Authorization
+       in: header
+#      description: 获取信息授权
+       required: true
+       schema:
+         type: string
      get:
        tags:
        - info
        summary: 获取机器人信息
        operationId: api.api_info.get_info
        description: 获取企业微信机器人信息
-       parameters:
-#         - $ref: '#/definitions/header'
-        - name: Authorization
-          in: header
-#          in: query是添加请求参数
-          description: 获取信息授权
-          required: true
-          schema:
-           type: string
        responses:
         200:
           description: '获取信息成功返回200'
@@ -40,13 +39,6 @@ paths:
        summary: 上传机器人信息
        description: 上传企业微信机器人信息
        operationId: api.api_info.create_info
-       parameters:
-        - name: Authorization
-          in: header
-          description: 上传信息授权
-          required: true
-          schema:
-           type: string
        requestBody:
          description: 机器人信息
          required: true
@@ -54,7 +46,8 @@ paths:
           application/json:
             schema:
             # 模式属性
-             $ref: '#/components/schemas/info'#该方法等同于下面注释的代码，该方法可以复用
+             $ref: '#/components/schemas/info'
+            #该方法等同于下面注释的代码，该方法可以复用
             # type: object
             # required:
             # - name
@@ -213,48 +206,54 @@ paths:
      responses:
         200:
          description: 删除模版成功
-  /send/template/robot:
-     post:
-      tags:
-      - sendmessages
-      summary: 发送模版中消息
-      description: 发送模版中消息
-      operationId: api.api_sendmsg.send_template_robot
-      parameters:
-        - name: Authorization
-          in: header
-          description: 发送信息授权
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: 发送的相关信息
-        required: true
-        content:
-          application/json:
-            schema:
-             type: object
-             required:
-             - content_name
-             - robot_key
-             properties:
-               content_name:
-                 description: 发送模版名字
-                 type: string
-               robot_key:
-                 description: 需要发送的机器人key
-                 type: string
-      responses:
-        200:
-          description: 删除模版成功
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  title:
-                    type: string
-  /send/robot:
+#  /send/template/robots:
+#     post:
+#      tags:
+#      - sendmessages
+#      summary: 发送模版中消息
+#      description: 发送模版中消息
+#      operationId: api.api_sendmsg.send_template_robot
+#      parameters:
+#        - name: Authorization
+#          in: header
+#          description: 发送信息授权
+#          required: true
+#          schema:
+#            type: string
+#      requestBody:
+#        description: 发送的相关信息
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#             type: object
+#             required:
+#             - content_name
+#             - key
+#             properties:
+#               content_name:
+#                 description: 发送模版名字
+#                 type: string
+#                 example: DX-DMP-冲刺看板
+#               key:
+#                 description: 需要发送的机器人key
+#                 type: array
+#                 items:
+#                   #properties:
+#                     #key:
+#                       type: string
+#                       example: ed012f420-63
+#      responses:
+#        200:
+#          description: 删除模版成功
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#                properties:
+#                  title:
+#                    type: string
+  /send/robots:
      post:
       tags:
       - sendmessages
@@ -274,27 +273,20 @@ paths:
         content:
           application/json:
             schema:
-             type: object
-             required:
-             - content
-             - robot_key
-             - msgtype
-             properties:
-               content:
-                 description: 发送内容
-                 type: string
-               msgtype:
-                 description: 发送的内容模式
-                 type: string
-                 enum:
-          #       枚举类型
-                   - text
-                   - markdown
-                   - news
-                   - image
-               robot_key:
-                 description: 需要发送的机器人key
-                 type: string
+              type: array
+              items:
+                $ref: '#/components/schemas/send_robot'
+            example:
+             - type: WeChat
+               key:
+                -
+               content: markdown类型内容
+               msgtype: markdown
+             - type: WeChat
+               key:
+                -
+               content: text类型内容
+               msgtype: text
       responses:
         200:
           description: 发送成功
@@ -306,7 +298,6 @@ paths:
                   title:
                     type: string
 
-
 components:
   schemas:
    info:
@@ -314,6 +305,7 @@ components:
      required:
      - name
      - url
+     - type
      properties:
        url:
          type: string
@@ -321,6 +313,12 @@ components:
          type: string
        comment:
          type: string
+       type:
+         type: string
+         example: WeChat
+         enum:
+         - WeChat
+         - DingDing
    content:
       type:  object
       required:
@@ -338,24 +336,47 @@ components:
           - news
           - image
        content:
-         type: string
-         description: 如果是markdown，需要为[{"titile":"test","color":"black"},{"color":"green","info":"已修复"},{"color":"orange","info":"未修复"},{"color":"gray","info":"已验证"},{"link_text":"这是一个链接","link":"www","color":"black"}]
+         type: array
+         description: 发送的内容
+         items:
+           properties:
+             title:
+               description: 标题
+             color:
+               description: markdown 格式需要的三种颜色 black、green、gray、orange
+             info:
+                description: 内容
+             link_text:
+                description: 链接文字描述
+             link:
+                description: 链接地址
+
+         example:
+            - title: test
+              color: black
+              info: heise
+            - title: test2
+              color: black2
+              info: info
        name:
          type: string
-#       project:
-#         description: 获取jira的项目
-#         type: string
-#       sprint:
-#         description: 获取jira的sprint
-#         type: string
+         description: 模版的名字，唯一
+   send_robot:
+     properties:
+      type:
+        description: 发送类型
+        type: string
+      key:
+        type: array
+        description: 企业微信或者钉钉机器人key
+      conten:
+        type: string
+        description: 发送内容，如果是text
+      msgtype:
+        type: string
+        description: 发送的内容格式
 
 
-#definitions:
-#  header:
-#    name: Authorization
-#    in: header
-#    description: 上传信息授权
-#    required: true
-#    type: string
-#    schema:
-#      type: string
+
+
+
