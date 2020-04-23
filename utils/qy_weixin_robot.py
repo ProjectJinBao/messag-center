@@ -6,9 +6,11 @@ import json
 
 
 class QYWX_Robot(object):
-    def __init__(self, key):
-        self.url ='https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
-
+    def __init__(self, key, type):
+        if type == "WeChat":
+            self.url ='https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
+        elif type == "DingDing":
+            self.url = 'https://oapi.dingtalk.com/robot/send?access_token=' + key
         self.headers = {
             'Content-Type': 'application/json'
         }

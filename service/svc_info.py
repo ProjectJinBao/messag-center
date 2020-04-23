@@ -11,17 +11,22 @@ def svc_get_info():
 
 #上传企业微信机器人信息到数据库中
 def svc_creat_info(body):
+
     name = body.get("name")
     url = body.get("url")
     comment = body.get("comment")
-    key = re_search(url)
-    Info.db_creat_info(url=url, name=name, comment=comment, key=key)
+    type = body.get("type")
+    key = re_search(url, type)
+    print(key)
+
+    Info.db_creat_info(url=url, name=name, comment=comment, key=key, type=type)
 
 def svc_put_info(key, body):
     name = body.get("name")
     url = body.get("url")
     comment = body.get("comment")
-    Info.db_update_info(url=url, name=name, comment=comment,key=key)
+    type = body.get("type")
+    Info.db_update_info(url=url, name=name, comment=comment,key=key,type=type)
 
 def svc_del_info(key):
     print(key)

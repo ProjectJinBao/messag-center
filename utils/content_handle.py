@@ -73,6 +73,10 @@ class ContentHandle(object):
 
 
 
+
+
+
+
 # # a = ContentHandle().conten_handle_template('[{"words":"test"},{"words":'',"color":"green","info":"未修复"}]')
 # #
 # content = '[{"titile":"test","info":"未修复","words":"1" ,"color":"balck"}]'

@@ -1,0 +1,353 @@
+openapi: 3.0.0
+info:
+  description: this is a restful apis  #REST（Representational State Transfer）RESTful REST式
+  title: message-center
+  version: 1.0.0
+servers:
+  - url: http://0.0.0.0:8888/
+tags:
+- description: 企业微信机器人info
+  name: info
+- description: content模版
+  name: template
+- description: 发送机器人消息
+  name: sendmessages
+
+
+paths:
+  /robots:
+     #path全局变量，path所有的方法都有的变量
+     parameters:
+     - name: Authorization
+       in: header
+#      description: 获取信息授权
+       required: true
+       schema:
+         type: string
+     get:
+       tags:
+       - info
+       summary: 获取机器人信息
+       operationId: api.api_info.get_info
+       description: 获取企业微信机器人信息
+       responses:
+        200:
+          description: '获取信息成功返回200'
+     post:
+       tags:
+       - info
+       summary: 上传机器人信息
+       description: 上传企业微信机器人信息
+       operationId: api.api_info.create_info
+      # parameters:
+        # - name: Authorization
+        #   in: header
+        #   description: 上传信息授权
+        #   required: true
+        #   schema:
+        #   type: string
+       requestBody:
+         description: 机器人信息
+         required: true
+         content:
+          application/json:
+            schema:
+            # 模式属性
+             $ref: '#/components/schemas/info'#该方法等同于下面注释的代码，该方法可以复用
+            # type: object
+            # required:
+            # - name
+            # - url
+            # properties:
+            #   url:
+            #     type: string
+            #   name:
+            #     type: string
+            #   comment:
+            #     type: string
+       responses:
+        200:
+          description: '上传信息成功返回200'
+  /robots/{key}:
+     put:
+      tags:
+      - info
+      summary: 修改机器人信息
+      description: 修改数据库中已存在的机器人信息，name和comment
+      operationId: api.api_info.update_info
+      parameters:
+       - name: Authorization
+         in: header
+         description: 修改授权
+         required: true
+         schema:
+           type: string
+       - name: key
+         in: path #路径参数
+         description: 需要修改信息的key
+         required: true
+         schema:
+           type: string
+      requestBody:
+        description: 提交需要修改信息
+        required: true
+        content:
+          application/json:
+           schema:
+              $ref: '#/components/schemas/info'
+      responses:
+        200:
+         description: '更新企业机器人信息成功'
+     delete:
+       tags:
+       - info
+       summary: 删除机器人信息
+       description: 删除企业微信机器人信息
+       operationId: api.api_info.delete_info
+       parameters:
+        - name: Authorization
+          in: header
+          description: 删除授权
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: 删除授权
+          required: true
+          schema:
+            type: string
+       responses:
+        200:
+         description: '发送成功'
+  /contents:
+    post:
+     tags:
+     - template
+     summary: 上传内容模版
+     description: 上传机器人发送的模版
+     operationId: api.api_content.create_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 上传模版信息授权
+        required: true
+        schema:
+          type: string
+     requestBody:
+        description: 模版信息
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/content'
+     responses:
+        200:
+          description: '上传信息成功返回200'
+    get:
+     tags:
+     - template
+     summary: 获取模版
+     description: 获取发送的模版
+     operationId: api.api_content.get_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 上传信息授权
+        required: true
+        schema:
+          type: string
+     responses:
+        200:
+          description: '获取模版成功'
+  /contents/{name}:
+    put:
+     tags:
+     - template
+     summary: 修改模版信息
+     description: 修改指定名称的模版信息
+     operationId: api.api_content.update_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 修改授权
+        required: true
+        schema:
+         type: string
+      - name: name
+        in: path
+        description: 根据名称获取信息并进行修改
+        required: true
+        schema:
+         type: string
+     requestBody:
+        description: 模版信息
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/content'
+     responses:
+       200:
+         description: 修改模版成功
+    delete:
+     tags:
+     - template
+     summary: 删除模版信息
+     description: 删除指定名称的模版信息
+     operationId: api.api_content.delete_content
+     parameters:
+      - name: Authorization
+        in: header
+        description: 修改授权
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: 根据名称获取信息并进行修改
+        required: true
+        schema:
+          type: string
+     responses:
+        200:
+         description: 删除模版成功
+  /send/template/robot:
+     post:
+      tags:
+      - sendmessages
+      summary: 发送模版中消息
+      description: 发送模版中消息
+      operationId: api.api_sendmsg.send_template_robot
+      parameters:
+        - name: Authorization
+          in: header
+          description: 发送信息授权
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 发送的相关信息
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             required:
+             - content_name
+             - key
+             properties:
+               content_name:
+                 description: 发送模版名字
+                 type: string
+               key:
+                 description: 需要发送的机器人key
+                 type: string
+      responses:
+        200:
+          description: 删除模版成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+  /send/robot:
+     post:
+      tags:
+      - sendmessages
+      summary: 直接发送消息
+      description: 直接发送消息
+      operationId: api.api_sendmsg.send_robot
+      parameters:
+        - name: Authorization
+          in: header
+          description: 发送信息授权
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 发送的相关信息
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             required:
+             - type
+             - content
+             - key
+             - msgtype
+             properties:
+               content:
+                 description: 发送内容
+                 type: string
+               msgtype:
+                 description: 发送的内容模式
+                 type: string
+                 enum:
+          #       枚举类型
+                   - text
+                   - markdown
+                   - news
+                   - image
+               key:
+                 description: 需要发送的机器人key
+                 type: string
+      responses:
+        200:
+          description: 发送成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+
+components:
+  schemas:
+   info:
+     type: object
+     required:
+     - name
+     - url
+     properties:
+       url:
+         type: string
+       name:
+         type: string
+       comment:
+         type: string
+   content:
+      type:  object
+      required:
+      - msgtype
+      - content
+      - name
+      properties:
+       msgtype:
+         type: string
+         description: 企业微信机器人支持的内容格式
+         enum:
+#       枚举类型
+          - text
+          - markdown
+          - news
+          - image
+       content:
+         type: string
+         description: 如果是markdown，需要为[{"titile":"test","color":"black"},{"color":"green","info":"已修复"},{"color":"orange","info":"未修复"},{"color":"gray","info":"已验证"},{"link_text":"ni","link":"www","color":"black"}]
+       name:
+         type: string
+         description: 模版的名字，唯一
+#       project:
+#         description: 获取jira的项目
+#         type: string
+#       sprint:
+#         description: 获取jira的sprint
+#         type: string
+
+
+
