@@ -371,9 +371,15 @@ components:
         description: 企业微信或者钉钉机器人key
       conten:
         type: string
-        description: 发送内容，如果是text
+        description: 发送内容,如果为images格式，内容为图片url
       msgtype:
         type: string
+        enum:
+#       枚举类型
+          - text
+          - markdown
+          - news
+          - image
         description: 发送的内容格式
 
 

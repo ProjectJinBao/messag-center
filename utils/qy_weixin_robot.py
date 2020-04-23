@@ -81,7 +81,7 @@ class QYWX_Robot(object):
                 'md5': image_md5
             }
         }
-        self._send(payload)
+        self.send(payload)
 
 
     def send_news(self, articles: list):
@@ -107,7 +107,7 @@ class QYWX_Robot(object):
                 'articles': articles
             }
         }
-        self._send(payload)
+        self.send(payload)
 
 
 

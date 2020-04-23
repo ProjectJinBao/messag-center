@@ -52,8 +52,9 @@ def svc_sendmsg(body):
             elif msgtype == "markdown":
                 QYWX_Robot(k,type).send_markdown(content)
             elif msgtype == "images":
-                QYWX_Robot(k,type).send_markdown(content)
+                print("=====")
+                QYWX_Robot(k,type).send_image(remote_url = content )
             elif msgtype == "news":
-                QYWX_Robot(k,type).send_markdown(content)
+                QYWX_Robot(k,type).send_news(content)
             else:
                 print("没有该格式内容")
