@@ -1,6 +1,5 @@
 # coding=utf-8
 from database.db_sendmsg import db_sendmsg
-from utils.search_jira import search_jira
 from utils.qy_weixin_robot import QYWX_Robot
 from utils.exception_handle import IsNotExist
 from utils.content_handle import ContentHandle
