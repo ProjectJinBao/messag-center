@@ -12,6 +12,15 @@ def get_info():
             'detail': f'{e}'
         },500
 #上传机器人信息
+def get_info_test():
+    try:
+        return svc_get_info(), 200
+    except Exception as e:
+        return {
+            'title': '获取列表异常',
+            'detail': f'{e}'
+        },500
+#上传机器人信息
 def create_info(body):
 
     try:
