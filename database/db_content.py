@@ -13,8 +13,8 @@ class Content(db.Entity):
     isdelete = Optional(bool)
     create_time = Required(datetime.datetime, default=datetime.datetime.now(), nullable=True)
     update_time = Required(datetime.datetime, default=datetime.datetime.now(), nullable=True)
-    project = Optional(str)
-    sprint = Optional(str)
+    # project = Optional(str)
+    # sprint = Optional(str)
 
     @classmethod
     @db_session
@@ -23,7 +23,7 @@ class Content(db.Entity):
         if obj:
             raise IsExist(title='该名字的模版已经存在', detail=f'name为【{name}】的模版已经存在')
         else:
-            Content(msgtype=msgtype, name=name, content=content, create_time=datetime.datetime.now(), isdelete=0)
+            Content(msgtype=msgtype, name=name, content=str(content), create_time=datetime.datetime.now(), isdelete=0)
 
     @classmethod
     @db_session
