@@ -1,0 +1,102 @@
+# 作为整个测试用例的全局配置项,作用域为整个测试用例；
+- config:
+    name: testcase description
+    variables:
+    #定义的全局变量，作用域为整个用例
+        autho: ${get_info(content)}
+
+#    setup_hooks:
+#       - ${s_config1(NDX, xumin)}
+#
+#    teardown_hooks:
+#       - ${t_config1(NDX, xumin)}
+
+
+
+- test:
+    name: post
+#    variables:
+#        autho: ${creat_name()}
+    request:
+        headers:
+            Authorization: NDX
+        method: POST
+        url: "http://10.8.1.244:8888/contents"
+        json:
+           msgtype: text
+           content: "jjjjji"
+           name: xumin
+
+    validate:
+        - eq: [status_code, 400]
+#        - eq: ["suc(.*)ss", "ce"]
+    setup_hooks:
+       - ${s_config1(xumin, NDX)}
+    teardown_hooks:
+       - ${t_config1( xumin, NDX)}
+#- test:
+#    name: post
+##    variables:
+##        autho: ${creat_name()}
+#    request:
+#        headers:
+#            Authorization: $autho
+#        method: DELETE
+#        url: "http://10.8.1.244:8888/contents"
+#    validate:
+#        - eq: [status_code, 200]
+
+
+
+#- test:
+#    name: get_content
+#    request:
+#        headers:
+#            Authorization: $autho
+#        method: GET
+#        url: "http://10.8.1.244:8888/contents"
+#    validate:
+#        - eq: [status_code, 200]
+#    setup_hooks:
+#       - ${s_config1(NDX, 11)}
+#       - ${s_config2()}
+#    teardown_hooks:
+#       - ${t_config1(NDX, 11)}
+#       - ${t_config2(1, 2)}
+
+#
+#
+#- test:
+#    name: test_variables_noapi
+#    variables:
+#    # 测试步骤中定义的变量，作用域为当前测试步骤
+#        autho: NDX
+#    request:
+#        headers:
+#            Authorization: $autho
+#        method: GET
+#        url: "http://10.8.1.244:8888/robots"
+#    extract:
+#        - token1: $..comment
+#    validate:
+#        - eq: [status_code, 200]
+#
+#
+#- test:
+#    name: test/noapi
+#    request:
+#        headers:
+#            Authorization: NDX
+#        method: GET
+#        url: "http://10.8.1.244:8888/robots"
+#    validate:
+#        - eq: [status_code, 200]
+#        - eq: [$token1, ["DMP测试报告","NDX-Quality","","","DMP测试报告"]]
+#        - sum_status_code: [content, "DMP测试报告"]
+#        #将响应结果传入引入函数，引入函数的判断结果作为此处的结果
+#
+
+
+
+
+

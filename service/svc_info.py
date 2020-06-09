@@ -8,6 +8,7 @@ def svc_get_info():
     # db.generate_mapping(create_tables=True)
     data = Info.db_get_info()
     return data
+    # return "hello"
 
 #上传企业微信机器人信息到数据库中
 def svc_creat_info(body):

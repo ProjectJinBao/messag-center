@@ -1,0 +1,12 @@
+name: comment
+base_url: http://10.8.1.244:8888
+variables:
+    autho: NDX
+    expected_status_code: 400
+request:
+    url: /robots
+    method: GET
+    headers:
+        Authorization: $autho
+validate:
+    - eq: ["status_code", $expected_status_code]

@@ -43,7 +43,7 @@ class Content(db.Entity):
 
     @classmethod
     @db_session
-    def db_update_content(cls, msgtype, name, content, project, sprint):
+    def db_update_content(cls, msgtype, name, content):
         obj = get(n for n in Content if n.name == name and n.isdelete == 0)
         if obj:
             obj.msgtype = msgtype

@@ -358,28 +358,12 @@ components:
           - news
           - image
        content:
-         type: array
-         description: 发送的内容
-         items:
-           properties:
-             title:
-               description: 标题
-             color:
-               description: markdown 格式需要的三种颜色 black、green、gray、orange
-             info:
-                description: 内容
-             link_text:
-                description: 链接文字描述
-             link:
-                description: 链接地址
+         type: string
+         description:
+       name:
+         type: string
+         description: 模版的名字，唯一
 
-         example:
-            - title: test
-              color: black
-              info: heise
-            - title: test2
-              color: black2
-              info: info
        name:
          type: string
          description: 模版的名字，唯一

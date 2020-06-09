@@ -1,0 +1,30 @@
+# 作为整个测试用例的全局配置项,作用域为整个测试用例；
+#- config:
+#    name: testcase description
+#    variables:
+#    #定义的全局变量，作用域为整个用例
+#        autho: NDX
+
+- test:
+    name: test/API
+    request:
+        headers:
+            Authorization: NDX
+        method: GET
+        url: "http://10.8.1.244:8888/contents"
+    validate:
+        - eq: [status_code, 200]
+
+- test:
+    name: test_variables_api
+    api: /Users/yujing/PycharmProjects/messag-center/httprunner_test/api.yaml
+#    variables:
+#    # 测试步骤中定义的变量，作用域为当前测试步骤
+#        autho: NDX
+    extract:
+        - token: content
+    validate:
+        - eq: [status_code, 200]
+
+
+

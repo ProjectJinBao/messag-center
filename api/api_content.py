@@ -4,7 +4,7 @@ import connexion
 def create_content(body):
     try:
         svc_create_content(body)
-        return 200
+        return "success"
     except IsExist as e:
         raise DefalutError(title=f'{e.title}', detail=f'{e.detail}', type=f'{e.type}')
     except Exception as e:

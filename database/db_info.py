@@ -63,10 +63,11 @@ class Info(db.Entity):
     @db_session
     def db_del_info(self,key):
         obj = get(n for n in Info if n.key == key)
+        print(key)
         if obj:
            obj.delete()
         else:
-            raise IsNotExist(title='删除机器人不存在', detail=f'key={key}的机器人不存在')
+            raise IsNotExist(title='删除机器人不存在', detail=f'【{key}】的机器人不存在')
 
     @classmethod
     @db_session
