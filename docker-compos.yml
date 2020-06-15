@@ -1,0 +1,15 @@
+version: "2"
+services:
+  message-center:
+    image: registry.dx.io/dx-pilot/message-center:master-83892c5
+    container_name: message-center
+    restart: always
+    ports:
+    - '8777: 8888'
+    environment:
+      HOST: 10.10.30.59
+      Port: 3307
+      USER: root
+      PASSWORD: 123456
+      DB: message_center
+

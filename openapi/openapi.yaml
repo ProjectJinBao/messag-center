@@ -359,7 +359,7 @@ components:
           - image
        content:
          type: string
-         description:
+         description: 如果是markdown，需要为[{"titile":"test","color":"black"},{"color":"green","info":"已修复"},{"color":"orange","info":"未修复"},{"color":"gray","info":"已验证"},{"link_text":"ni","link":"www","color":"black"}]
        name:
          type: string
          description: 模版的名字，唯一

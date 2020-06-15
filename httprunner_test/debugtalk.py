@@ -77,20 +77,30 @@ def s_config1(author, name):
       url = "http://10.8.1.244:8888/contents"
       body = {"msgtype": "text", "content": "jjjjji", "name": name}
       rs = requests.request("POST", url, headers=h, json=body)
-      print(rs.content)
+      print("==================")
 
 def s_config2(a, b):
-      y = a + b
+    return a + b
 
 def t_config1(author, name):
       h = {"Authorization": author}
       url = f"http://10.8.1.244:8888/contents/{name}"
-      print(url)
       body = {"msgtype": "text", "content": "update", "name": name}
       rs = requests.request("PUT", url, headers=h, json=body)
-      print(rs.content)
+      print("=======+++++++++")
 
 def t_config2():
       y = 1 + 1
 
-# s_config1("NDX","11")
+
+def delete_content(author, name):
+    namestr = str(name)
+    h = {"Authorization": author}
+    url = f"http://10.8.1.244:8888/contents/{namestr}"
+    print(url)
+    rs = requests.request("DELETE", url, headers=h)
+
+delete_content("NDX","xumin")
+
+s_config2(1,2)
+print(type(s_config2("yu","2")))

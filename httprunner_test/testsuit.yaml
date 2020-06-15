@@ -1,16 +1,16 @@
 config:
     name: create users with uid
     variables:
-        autho: NDX1
+        autho: NDX
     base_url: "http://10.8.1.244:8888"
 
 testcases:
     create user 1000 and check result.:
-        testcase: testcase_api.yaml
+        testcase: testcase_noapi.yaml
 #        variables:
 #            autho: 111
 
-    create user 1001 and check result.:
-        testcase: testcase_noapi.yaml
-#        variables:
-#            autho: NDX
+#    create user 1001 and check result.:
+#        testcase: testcase_noapi.yaml
+##        variables:
+##            autho: NDX

@@ -3,7 +3,7 @@
     name: testcase description
     variables:
     #定义的全局变量，作用域为整个用例
-        autho: ${get_info(content)}
+        autho: NDX
 
 #    setup_hooks:
 #       - ${s_config1(NDX, xumin)}
@@ -24,16 +24,19 @@
         url: "http://10.8.1.244:8888/contents"
         json:
            msgtype: text
-           content: "jjjjji"
-           name: xumin
+           content: ${s_config2(yu,2)}
+           name: ${creat_name()}
 
     validate:
-        - eq: [status_code, 400]
+        - eq: [status_code, 200]
 #        - eq: ["suc(.*)ss", "ce"]
-    setup_hooks:
-       - ${s_config1(xumin, NDX)}
-    teardown_hooks:
-       - ${t_config1( xumin, NDX)}
+#    setup_hooks:
+#       - ${s_config1(NDX, xumin)}
+#    teardown_hooks:
+#       - ${t_config1(NDX, xumin)}
+
+
+
 #- test:
 #    name: post
 ##    variables:
