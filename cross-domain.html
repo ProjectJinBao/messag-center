@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>跨域测试</title>
+</head>
+
+<body>
+
+    <table border="1" cellpadding="0" cellspacing="0" width="400px" class="table">
+        <tr class="a1">
+            <th>Get请求</th>
+            <!-- <th> <input type="submit" value="发送请求" onclick="get()" /></th> -->
+        </tr>
+        
+        <tr>
+            <th>URL:http://10.10.177.1:8888/robots </th>
+            <!-- <th> <input type="submit" value="发送请求" onclick="get()" /></th> -->
+        </tr>
+
+        <tr> 
+            <td><input type="submit" value="发送请求" onclick="get()" id="sub"/></td>
+         </tr>
+        <!-- <tr height="200px">
+            <td>Response</td>
+        </tr>
+        <tr>
+            <td> <input type="submit" value="发送请求" onclick="get()" /></td>
+        </tr> -->
+    </table>
+
+    <br>
+    <table border="1" cellpadding="0" cellspacing="0" width="400px">
+        <tr class="a1">
+            <th colspan="2">Post 请求</th>
+        </tr>
+        <tr>
+            <th colspan="2">URL:http://10.10.177.1:8888/contents</th>
+        </tr>  
+        <tr>
+            <td>
+                <lable>msgtype</lable>
+            </td>
+            <td><input type="text" id="msgtype" /></td>
+        </tr>
+        <tr>
+            <td>
+                <lable>content</lable>
+            </td>
+            <td> <input type="text" id="content" /></td>
+        </tr>
+        <tr>
+            <td>
+                <lable>name</lable>
+            </td>
+            <td><input type="text" id="name" /></td>
+        </tr>
+        <tr>
+            <td>
+                <lable>project</lable>
+            </td>
+            <td><input type="text" id="project" /></td>
+        </tr>
+        <tr>
+            <td>
+                <lable>sprint</lable>
+            </td>
+            <td><input type="text" id="sprint" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"> <input type="submit" value="发送请求" onclick="post()" id="submi"/></td>
+        </tr>
+    </table>
+
+</body>
+<style>
+    #sub{
+        background-color: #9DC45F;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-border-radius: 5px;
+        border: none;
+        /* padding: 10px 25px 10px 25px; */
+        color: #FFF;
+        text-shadow: 1px 1px 1px #949494;
+    }
+
+    #submi {
+        background-color: #9DC45F;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-border-radius: 5px;
+        border: none;
+        /* padding: 10px 25px 10px 25px; */
+        color: #FFF;
+        text-shadow: 1px 1px 1px #949494;
+    }
+
+    table
+        {
+            border-collapse: collapse;
+            margin: 0 auto;
+            text-align: center;
+        }
+        table td, table th
+        {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        table thead th
+        {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        table tr:nth-child(odd)
+        {
+            background: #fff;
+        }
+        table tr:nth-child(even)
+        {
+            background: #F5FAFA;
+        }
+
+</style>
+
+
+<script type="text/javascript">
+
+// http://10.10.177.1:8888/robots
+    function get() {
+        var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
+        httpRequest.open('GET', 'http://172.16.100.20:32625/kuayu', true);//第二步：打开连接  将请求参数写在url中  ps:"./Ptest.php?name=test&nameone=testone"
+        httpRequest.setRequestHeader("Authorization", "NDX")
+        httpRequest.send();//第三步：发送请求  将请求参数写在URL中
+        /**
+         * 获取数据后的处理程序
+         */
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;//获取到json字符串，还需解析
+                alert(json)
+                console.log(json);
+            }
+        };
+    }
+
+
+// http://10.10.177.1:8888/contents
+    function post() {
+        var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+        httpRequest.open('POST', 'http://172.16.100.20:32625/kuayu', true); //第二步：打开连接
+        httpRequest.setRequestHeader("Content-type", "application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+        httpRequest.setRequestHeader("Authorization", "NDX");
+        var msgtype = document.getElementById("msgtype").value;
+        var content = document.getElementById("content").value;
+        var name = document.getElementById("name").value;
+        var project = document.getElementById("project").value;
+        var sprint = document.getElementById("sprint").value;
+        httpRequest.send(JSON.stringify({
+                "msgtype" : msgtype,
+                "content" : content,
+                "name": name,
+                "project": project,
+                "sprint": sprint
+                }));//发送请求 将情头体写在send中
+        /**
+         * 获取数据后的处理程序
+         */
+        httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                var json = httpRequest.responseText;//获取到服务端返回的数据
+                alert(json)
+                console.log(json);
+            }
+        };
+
+    }
+
+</script>
+
+</html>
+
+<!-- 
+##
+curl --location --request GET 'http://10.10.177.1:8888/robots' \
+--header 'Authorization: NDX'
+
+##
+curl --location --request POST 'http://10.10.177.1:8888/contents' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: NDX' \
+--data-raw ' {"msgtype":"text","content":"2","name":"3","project":"","sprint":""}' -->

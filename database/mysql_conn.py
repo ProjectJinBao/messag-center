@@ -16,11 +16,10 @@ Pony规定与数据库进行交互的代码必须在数据库会话中工作
 
 db = Database(provider = "mysql",
               host = os.getenv('HOST') if os.getenv('MY_HOST') else '10.10.30.59',
-              port = os.getenv('Port') or 3307,
+              port = int(os.getenv('Port')) or 3303,
               user = os.getenv('USER') if os.getenv('MY_USER') else 'root',
               password = os.getenv('PASSWORD') or '123456',
-              database = os.getenv('DB') or 'message_center',
-              charset = "utf8mb4"
+              database = os.getenv('DB') or 'message_center'
               )
 
 
